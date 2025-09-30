@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Admin • Audit Logs</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <script>if(localStorage.getItem('lf_role')!=='admin'){ location.replace('profile.html'); }</script>
+  <main class="card">
+    <div class="header"><h1>Audit Log Review</h1><a class="btn" href="admin-dashboard.html">Back</a></div>
+    <table class="table">
+      <thead><tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Target</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>2025-09-02 10:12</td><td>Admin2</td><td>Status change</td><td>User: sam@example.com</td><td><span class="badge ok">Active → Suspended</span></td></tr>
+        <tr><td>2025-09-02 09:48</td><td>Admin1</td><td>Override</td><td>Match L#245</td><td><span class="badge warn">Overridden</span></td></tr>
+        <tr><td>2025-09-01 18:21</td><td>System</td><td>Report generated</td><td>Daily Summary</td><td><span class="badge">CSV</span></td></tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

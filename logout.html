@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Logged Out</title><link rel="stylesheet" href="styles.css"/></head>
+<body class="bg-map">
+  <main class="card" style="max-width:560px">
+    <h1>Logged Out</h1>
+    <p>Session ended successfully.</p>
+    <div class="actions"><a class="btn primary" href="login.html">Log In Again</a><a class="btn" href="index.html">Home</a></div>
+  </main>
+  <script>
+  localStorage.removeItem('lf_role'); 
+  localStorage.removeItem('lf_email');</script>
+</body>
+</html>

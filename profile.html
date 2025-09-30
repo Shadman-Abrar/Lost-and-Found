@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Profile • Lost & Found</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <script>
+    const role = localStorage.getItem('lf_role');
+    if(!role){ window.location.replace('login.html'); }
+    if(role==='admin'){ window.location.replace('admin-dashboard.html'); }
+  </script>
+  <main class="card">
+    <div class="header">
+      <h1>Profile</h1>
+      <div class="actions">
+        <a class="btn" href="user-dashboard.html">Dashboard</a>
+        <a class="btn" href="report-lost.html">Report Lost</a>
+        <a class="btn" href="report-found.html">Report Found</a>
+        <a class="btn" href="view-lost.html">View Lost</a>
+        <a class="btn" href="view-found.html">View Found</a>
+        <a class="btn" href="change-password.html">Change Password</a>
+        <a class="btn ghost" href="logout.html">Logout</a>
+      </div>
+    </div>
+    <section class="grid-3">
+      <div class="card-mini"><h3>Account Status</h3><span id="accStatus" class="badge ok">Active</span></div>
+      <div class="card-mini"><h3>Items Reported</h3><div id="statLost" class="big">0</div><small class="badge">Lost</small></div>
+      <div class="card-mini"><h3>Items Returned</h3><div id="statReturned" class="big">0</div><small class="badge ok">Matches</small></div>
+    </section>
+    <h2 style="margin-top:22px">View / Update Details</h2>
+    <form method="POST" action="profile.php">
+      <div class="row">
+        <div class="input"><span class="icon">🧑</span><input name="first" placeholder="First name" required /></div>
+        <div class="input"><span class="icon">🧑</span><input name="last" placeholder="Last name" required /></div>
+      </div>
+      <div class="row">
+        <div class="input"><span class="icon">📧</span><input type="email" name="email" placeholder="Email" required /></div>
+        <div class="input"><span class="icon">📞</span><input name="phone" placeholder="Phone" /></div>
+      </div>
+      <div class="input"><span class="icon">📍</span><input name="location" placeholder="City / Campus" /></div>
+      <div class="input"><span class="icon">📝</span><textarea name="bio" rows="3" placeholder="About"></textarea></div>
+      <div class="actions"><button class="btn primary" type="submit">Save Changes</button><a class="btn" href="index.html">Home</a></div>
+    </form>
+  </main>
+  <script>
+    const email = localStorage.getItem('lf_email') || '';
+    const form  = document.getElementById('profileForm');
+    form.email.value = email;
+    const PROFILE_KEY='lf_profile';
+    try{
+      const saved=JSON.parse(localStorage.getItem(PROFILE_KEY))||{};
+      ['first','last','email','phone','location','bio'].forEach(k=>{ if(saved[k]) form[k].value=saved[k]; });
+    }catch(e){}
+    function get(key){ try{return JSON.parse(localStorage.getItem(key))||[]}catch(e){return []} }
+    const myEmail=form.email.value||email;
+    const myLost=get('lf_lost_items').filter(x=>x.owner===myEmail);
+    const returned=myLost.reduce((a,l)=> a + (get('lf_found_items').some(f=>(f.title||'').toLowerCase().includes((l.title||'').toLowerCase()))?1:0), 0);
+    document.getElementById('statLost').textContent=myLost.length;
+    document.getElementById('statReturned').textContent=returned;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const data=Object.fromEntries(new FormData(form).entries());
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(data));
+      localStorage.setItem('lf_email', data.email);
+      alert('Profile saved.');
+    });
+  </script>
+</body>
+</html>

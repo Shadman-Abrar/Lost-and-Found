@@ -1,0 +1,133 @@
+/* Typeface */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap'); /* Inter family import */ /* [11][14] */
+
+/* Minimal sensible reset for consistency */
+*, *::before, *::after { box-sizing: border-box; } /* [8][13] */
+img, picture { max-width: 100%; display: block; } /* [8] */
+input, button, textarea, select { font: inherit; } /* [8][13] */
+body { min-height: 100vh; line-height: 1.5; } /* [8][13] */
+
+/* Theme tokens */
+:root{
+  --bg:#eef5ff;
+  --card:#fff;
+  --ink:#0b1b3a;
+  --muted:#5d6b82;
+  --primary:#2e6bff;
+  --accent:#00b3a4;
+  --danger:#e34b4b;
+  --ring:0 0 0 3px rgba(46,107,255,.2);
+  --radius:16px;
+} /* [5] */
+
+/* Base layout */
+*{ box-sizing:border-box } 
+html,body{ height:100% } /* [8] */
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+} /* [14] */
+
+.bg-map{
+  background:
+    radial-gradient(1000px 600px at 20% 10%, #dfeaff 0, transparent 60%),
+    radial-gradient(1000px 600px at 90% 80%, #e6f7ff 0, transparent 60%),
+    linear-gradient(45deg, #eaf1ff 25%, transparent 25%) 0 0/40px 40px,
+    linear-gradient(-45deg, #eaf1ff 25%, transparent 25%) 0 0/40px 40px;
+} /* [14] */
+
+.card{
+  width:min(920px,92vw);
+  margin:6vh auto;
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:0 20px 60px rgba(15,23,42,.12);
+  padding:32px 28px;
+} /* [14] */
+
+h1{ margin:4px 0 16px }
+p{ color:var(--muted) }
+
+/* Forms */
+.form{ display:grid; gap:14px; margin-top:10px }
+.input{ position:relative }
+
+.input input,
+.input select,
+.input textarea{
+  width:100%;
+  padding:14px 14px 14px 44px;
+  border:1px solid #d7def0;
+  border-radius:12px;
+  outline:none;
+  font-size:16px;
+  transition: border-color .2s, box-shadow .2s, transform .2s; /* fixed typo */
+  background:#f8fbff;
+} /* [14] */
+
+.input input:focus,
+.input select:focus,
+.input textarea:focus{
+  border-color:var(--primary);
+  box-shadow:var(--ring);
+  background:#fff;
+} /* [14] */
+
+.input .icon{
+  position:absolute;
+  left:12px; top:50%;
+  transform:translateY(-50%);
+  color:#7e8aa9; font-size:18px;
+} /* [14] */
+
+/* Grid helpers */
+.row{ display:grid; gap:12px }
+@media(min-width:680px){ .row{ grid-template-columns:1fr 1fr } } /* [14] */
+
+/* Buttons & actions */
+.actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px }
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:12px 16px; border-radius:10px;
+  border:1px solid #cfd8f3; text-decoration:none; color:var(--ink);
+  background:#f4f7ff;
+  transition: transform .2s, background .2s, box-shadow .2s;
+}
+.btn:hover{ transform:translateY(-1px); background:#eef3ff }
+.btn.primary{ background:var(--primary); color:#fff; border-color:transparent }
+.btn.primary:hover{ box-shadow:0 8px 20px rgba(46,107,255,.35) }
+.btn.ghost{ background:transparent } /* [14] */
+
+/* Tiny helpers */
+.helper{ display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--muted); margin-top:4px }
+.helper a{ color:var(--primary); text-decoration:none }
+.helper a:hover{ text-decoration:underline } /* [14] */
+
+.alert{ padding:10px 12px; border-left:4px solid var(--danger); background:#fff2f2; color:#8a1d1d; border-radius:8px } /* [14] */
+
+/* Tables */
+.table{
+  width:100%; border-collapse:collapse; border:1px solid #e5eaf7;
+  border-radius:12px; overflow:hidden;
+}
+.table th,.table td{ padding:12px 10px; border-bottom:1px solid #edf1fb; text-align:left; font-size:14px }
+.table th{ background:#f6f9ff; color:#445070 } /* [14] */
+
+/* Badges */
+.badge{ padding:4px 8px; border-radius:999px; font-size:12px; background:#eef3ff; color:#2b3f88 }
+.badge.ok{ background:#e8fff8; color:#146a60 }
+.badge.warn{ background:#fff5e6; color:#8a5a00 }
+.badge.err{ background:#ffe9e9; color:#8a1d1d } /* [14] */
+
+/* Layout sections */
+.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px }
+.grid-3{ display:grid; gap:14px; grid-template-columns:1fr }
+@media(min-width:900px){ .grid-3{ grid-template-columns:repeat(3,1fr) } } /* [14] */
+
+.card-mini{ padding:16px; border:1px solid #e6ecff; border-radius:12px; background:#fff }
+.card-mini h3{ margin:0 0 6px; font-size:14px; color:#5b6a8e }
+.card-mini .big{ font-size:28px; font-weight:700 } /* [14] */
+
+footer.small{ margin-top:20px; color:var(--muted); font-size:13px } /* [14] */

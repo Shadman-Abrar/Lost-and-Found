@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register • Lost & Found</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-map">
+  <main class="card" style="max-width:720px">
+    <h1>Create Account</h1>
+    <form method="POST" action="register.php">
+      <div class="row">
+        <div class="input"><span class="icon">🧑</span><input name="first" placeholder="First name" required /></div>
+        <div class="input"><span class="icon">🧑</span><input name="last" placeholder="Last name" required /></div>
+      </div>
+      <div class="input"><span class="icon">📧</span><input type="email" name="email" placeholder="Email" required /></div>
+      <div class="row">
+        <div class="input"><span class="icon">🔒</span>
+         <input type="password" name="password" placeholder="Password" minlength="8" required />
+        </div>
+        <div class="input"><span class="icon">🔒</span><input type="password" name="confirm" placeholder="Confirm password" required /></div>
+      </div>
+      <div class="helper"><label><input type="checkbox" name="agree" required /> I agree to terms</label><small>At least 8 characters</small></div>
+      <div class="actions"><button class="btn primary" type="submit">Sign Up</button><a class="btn" href="login.html">Have an account? Log in</a></div>
+    </form>
+  </main>
+
+  <!-- Only this script; verify path is correct -->
+  <script type="module" src="js/validate-register.js"></script>
+</body>
+</html>

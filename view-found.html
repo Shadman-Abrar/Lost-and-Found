@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>View Found Items</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <main class="card">
+    <div class="header"><h1>Found Items</h1>
+      <div class="actions"><a class="btn" href="report-found.html">Report Found</a><a class="btn" href="user-dashboard.html">Dashboard</a></div>
+    </div>
+    <div class="row">
+      <div class="input"><span class="icon">🔎</span><input id="q" placeholder="Search by title, location or category"></div>
+      <div class="input"><span class="icon">📂</span>
+        <select id="cat"><option value="">All Categories</option><option>Electronics</option><option>Accessories</option><option>Books</option><option>ID/Docs</option><option>Others</option></select>
+      </div>
+    </div>
+    <table class="table" id="tbl"><thead><tr><th>Date</th><th>Title</th><th>Category</th><th>Location</th><th>Photo</th></tr></thead><tbody></tbody></table>
+  </main>
+  <script>
+    const KEY='lf_found_items', all=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}};
+    const tbody=document.querySelector('#tbl tbody'), q=document.getElementById('q'), cat=document.getElementById('cat');
+    function render(){
+      const query=q.value.toLowerCase(), c=cat.value;
+      const rows=all().filter(i=>{const t=(i.title+' '+i.location+' '+i.category).toLowerCase();return(!query||t.includes(query))&&(!c||i.category===c);})
+        .reverse().map(i=>`<tr><td>${i.date||''}</td><td>${i.title}</td><td>${i.category}</td><td>${i.location}</td>
+          <td>${i.photo?`<img src="${i.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid #e6ecff">`:''}</td></tr>`).join('');
+      tbody.innerHTML = rows || '<tr><td colspan="5"><em>No records.</em></td></tr>';
+    }
+    q.addEventListener('input', render); cat.addEventListener('change', render); render();
+  </script>
+</body>
+</html>

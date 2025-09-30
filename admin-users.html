@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Admin • Users</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <script>if(localStorage.getItem('lf_role')!=='admin'){ location.replace('profile.html'); }</script>
+  <main class="card">
+    <div class="header"><h1>User Accounts</h1><a class="btn" href="admin-dashboard.html">Back</a></div>
+    <table class="table">
+      <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td>Alex Morgan</td><td>alex@example.com</td><td><span class="badge ok">Active</span></td>
+          <td class="actions"><a class="btn" href="profile.html">View</a><button class="btn">Deactivate</button><button class="btn">Delete</button></td></tr>
+        <tr><td>Sam Lee</td><td>sam@example.com</td><td><span class="badge warn">Pending</span></td>
+          <td class="actions"><button class="btn">Activate</button><button class="btn">Delete</button></td></tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

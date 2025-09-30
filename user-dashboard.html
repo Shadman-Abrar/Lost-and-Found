@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>User Dashboard • Lost & Found</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <script>const role=localStorage.getItem('lf_role'); if(!role){location.replace('login.html');} if(role==='admin'){location.replace('admin-dashboard.html');}</script>
+  <main class="card">
+    <div class="header">
+      <h1>User Dashboard</h1>
+      <div class="actions">
+        <a class="btn" href="report-lost.html">Report Lost</a>
+        <a class="btn" href="report-found.html">Report Found</a>
+        <a class="btn" href="view-lost.html">View Lost</a>
+        <a class="btn" href="view-found.html">View Found</a>
+        <a class="btn ghost" href="profile.html">Profile</a>
+      </div>
+    </div>
+    <section class="grid-3">
+      <div class="card-mini"><h3>My Lost Reports</h3><div id="cLost" class="big">0</div></div>
+      <div class="card-mini"><h3>My Found Reports</h3><div id="cFound" class="big">0</div></div>
+      <div class="card-mini"><h3>Potential Matches <span id="notif" class="badge" style="margin-left:8px">0</span></h3><div class="big">🔔</div></div>
+    </section>
+    <h2 style="margin-top:22px">Recent Reports</h2>
+    <div class="row">
+      <div class="card-mini" style="min-height:200px"><h3>My Lost</h3><ul id="listLost"></ul></div>
+      <div class="card-mini" style="min-height:200px"><h3>My Found</h3><ul id="listFound"></ul></div>
+    </div>
+  </main>
+  <script>
+    const email=localStorage.getItem('lf_email')||'me@example.com', LOST='lf_lost_items', FOUND='lf_found_items';
+    const get=(k)=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return []}};
+    const mine=(arr)=>arr.filter(x=>x.owner===email);
+    function matches(){
+      const lost=mine(get(LOST)), found=get(FOUND); let n=0;
+      lost.forEach(l=>{ const tl=(l.title+' '+l.description).toLowerCase();
+        found.forEach(f=>{ const tf=(f.title+' '+f.description).toLowerCase();
+          if(tl && tf && (tf.includes((l.title||'').toLowerCase()) || tl.includes((f.title||'').toLowerCase()))) n++; });
+      });
+      return n;
+    }
+    function render(){
+      const myL=mine(get(LOST)), myF=mine(get(FOUND));
+      document.getElementById('cLost').textContent=myL.length;
+      document.getElementById('cFound').textContent=myF.length;
+      document.getElementById('notif').textContent=matches();
+      const UL=document.getElementById('listLost'), UF=document.getElementById('listFound');
+      UL.innerHTML = myL.slice(-5).reverse().map(i=>`<li>${i.date} • ${i.title} • ${i.location}</li>`).join('') || '<em>No lost reports yet.</em>';
+      UF.innerHTML = myF.slice(-5).reverse().map(i=>`<li>${i.date} • ${i.title} • ${i.location}</li>`).join('') || '<em>No found reports yet.</em>';
+    } render();
+  </script>
+</body>
+</html>

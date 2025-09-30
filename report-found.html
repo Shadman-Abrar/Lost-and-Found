@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Report Found Item</title><link rel="stylesheet" href="styles.css"/></head>
+<body class="bg-map">
+  <script>if(!localStorage.getItem('lf_role')){ location.replace('login.html'); }</script>
+  <main class="card" style="max-width:760px">
+    <div class="header"><h1>Report Found Item</h1><a class="btn" href="user-dashboard.html">Dashboard</a></div>
+    <form class="form" id="foundForm">
+      <div class="row">
+        <div class="input"><span class="icon">🏷️</span><input name="title" placeholder="Item title (e.g., Blue Umbrella)" required></div>
+        <div class="input"><span class="icon">📂</span>
+          <select name="category" required>
+            <option value="">Category</option><option>Electronics</option><option>Accessories</option><option>Books</option><option>ID/Docs</option><option>Others</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input"><span class="icon">📍</span><input name="location" placeholder="Where found" required></div>
+        <div class="input"><span class="icon">📅</span><input type="date" name="date" required></div>
+      </div>
+      <div class="input"><span class="icon">📝</span><textarea name="description" rows="3" placeholder="Description, where held, claim instructions" required></textarea></div>
+      <div class="row">
+        <div class="input"><span class="icon">🖼️</span><input id="foundPhoto" type="file" accept="image/*"></div>
+        <div class="input"><small>Preview:</small><img id="foundPreview" style="display:block;max-width:160px;border-radius:8px;border:1px solid #e6ecff;padding:4px;background:#fff"/></div>
+      </div>
+      <div class="actions"><button class="btn primary" type="submit">Submit Found Report</button><a class="btn" href="view-found.html">View Found</a></div>
+    </form>
+  </main>
+  <script>
+    const fi=document.getElementById('foundPhoto'), pv=document.getElementById('foundPreview');
+    fi.addEventListener('change', ()=>{ const f=fi.files&&fi.files; if(!f){pv.src='';pv.style.display='none';return;}
+      const r=new FileReader(); r.onload=e=>{pv.src=e.target.result;pv.style.display='block'}; r.readAsDataURL(f); });
+    const KEY='lf_found_items'; const read=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}};
+    const write=(v)=>localStorage.setItem(KEY, JSON.stringify(v));
+    document.getElementById('foundForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const data={ id:'F'+Date.now(), owner:localStorage.getItem('lf_email')||'me@example.com',
+        title:this.title.value.trim(), category:this.category.value, location:this.location.value.trim(),
+        date:this.date.value, description:this.description.value.trim(), photo:pv.src||'' };
+      const list=read(); list.push(data); write(list);
+      alert('Found item reported.'); location.href='user-dashboard.html';
+    });
+  </script>
+</body>
+</html>
